@@ -55,6 +55,36 @@ public class Console
     }
 
     /**
+     * Prints an exception to the console.
+     *
+     * @param e Exception thrown.
+     */
+    public static void print(Exception e)
+    {
+        Console.println("An exception occurred!");
+        Console.println("Message: "+ e.getMessage());
+
+        if(!Console.debug) {
+            return;
+        }
+
+        Console.println("Stack trace:");
+        StackTraceElement[] st = e.getStackTrace();
+        for(StackTraceElement element : st) {
+            Console.println(
+                    "    ",
+                    element.getClassName(),
+                    "::",
+                    element.getMethodName(),
+                    "() - ",
+                    element.getFileName(),
+                    " line ",
+                    element.getLineNumber()
+            );
+        }
+    }
+
+    /**
      * Short method for `Console.print`.
      *
      * @param strings String(s) to print.
