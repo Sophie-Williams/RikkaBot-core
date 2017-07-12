@@ -11,7 +11,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("mainWindow.fxml"));
-        primaryStage.setTitle("りっか - 0 accounts running");
+        primaryStage.setTitle("RikkaBot - 0 accounts running");
         primaryStage.setScene(new Scene(root, 600, 349));
         primaryStage.setResizable(false);
         primaryStage.show();
