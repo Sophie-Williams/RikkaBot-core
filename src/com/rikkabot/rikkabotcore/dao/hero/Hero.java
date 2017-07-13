@@ -1,5 +1,6 @@
 package com.rikkabot.rikkabotcore.dao.hero;
 
+import com.rikkabot.rikkabotcore.dao.DAO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.Accessors;
@@ -9,7 +10,7 @@ import lombok.experimental.Accessors;
  */
 
 @AllArgsConstructor @Accessors @Getter
-public class Hero
+public class Hero extends DAO
 {
     private String username;
     private String password;
