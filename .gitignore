@@ -21,6 +21,7 @@
 hs_err_pid*
 
 .idea/
+*.directory
 *.iml
 out/
 test/
