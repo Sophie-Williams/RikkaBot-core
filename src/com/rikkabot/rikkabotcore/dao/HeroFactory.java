@@ -1,4 +1,4 @@
-package com.rikkabot.rikkabotcore.bot;
+package com.rikkabot.rikkabotcore.dao;
 
 import com.rikkabot.rikkabotcore.networking.HttpClient;
 import com.rikkabot.rikkabotcore.utils.Regex;

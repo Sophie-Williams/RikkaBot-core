@@ -1,4 +1,4 @@
-package com.rikkabot.rikkabotcore.bot;
+package com.rikkabot.rikkabotcore.dao;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
