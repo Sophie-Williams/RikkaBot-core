@@ -13,7 +13,7 @@ public class HeroFactory extends Factory<Hero> {
      * @param password password of the account
      * @return an instance of hero
      */
-    public static Hero login(String username, String password) {
+    public Hero login(String username, String password) {
         HttpClient httpClient  = new HttpClient();
         String loginPage   = httpClient.get("https://lp.darkorbit.com/frame"); //Turkish login fix
         String loginAction = Regex.match("bgcdw_login_form\" action=\"(.*?)\"", loginPage)
