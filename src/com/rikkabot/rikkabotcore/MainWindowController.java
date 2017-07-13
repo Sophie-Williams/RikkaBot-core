@@ -1,7 +1,7 @@
 package com.rikkabot.rikkabotcore;
 
-import com.rikkabot.rikkabotcore.dao.Hero;
-import com.rikkabot.rikkabotcore.dao.HeroFactory;
+import com.rikkabot.rikkabotcore.dao.hero.Hero;
+import com.rikkabot.rikkabotcore.dao.hero.HeroFactory;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 
