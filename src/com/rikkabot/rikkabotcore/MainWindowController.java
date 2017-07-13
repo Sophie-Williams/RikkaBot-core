@@ -1,6 +1,7 @@
 package com.rikkabot.rikkabotcore;
 
 import com.rikkabot.rikkabotcore.bot.Hero;
+import com.rikkabot.rikkabotcore.bot.HeroFactory;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 
@@ -12,8 +13,6 @@ public class MainWindowController {
     public void onLoginBtnPressed(ActionEvent event) {
         System.out.println("logging in");
 
-        Hero h = new Hero(usernameField.getText(), passwordField.getText());
-
-        new Thread(h::login).run();
+        Hero hero = HeroFactory.login(usernameField.getText(), passwordField.getText());
     }
 }

@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
  */
 public class Regex {
     public static Matcher match(String regex, String input) {
-        Pattern p = Pattern.compile(regex);
+        Pattern p = Pattern.compile(regex, Pattern.DOTALL);
         final Matcher matcher = p.matcher(input);
         matcher.find();
         return matcher;
