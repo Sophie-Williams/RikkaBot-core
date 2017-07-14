@@ -3,6 +3,9 @@ package com.rikkabot.rikkabotcore.bot;
 import java.io.IOException;
 import java.util.HashMap;
 
+import com.rikkabot.rikkabotcore.bot.commands.incoming.HandshakeCommand;
+import com.rikkabot.rikkabotcore.bot.commands.incoming.ObfuscationCommand;
+import com.rikkabot.rikkabotcore.bot.commands.incoming.VersionCommand;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufInputStream;
 import io.netty.channel.ChannelHandlerContext;
@@ -44,6 +47,9 @@ public class GameCommandLookup extends SimpleChannelInboundHandler<ByteBuf> {
         this.connection(connection);
 
         // TODO populate `this.commands`
+        this.commands.put(VersionCommand.ID, VersionCommand.class);
+        this.commands.put(HandshakeCommand.ID, HandshakeCommand.class);
+        this.commands.put(ObfuscationCommand.ID, ObfuscationCommand.class);
     }
 
     /**
