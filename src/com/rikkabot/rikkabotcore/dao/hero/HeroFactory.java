@@ -1,7 +1,7 @@
 package com.rikkabot.rikkabotcore.dao.hero;
 
 import com.rikkabot.rikkabotcore.dao.Factory;
-import com.rikkabot.rikkabotcore.networking.HttpClient;
+import com.rikkabot.rikkabotcore.net.HttpClient;
 import com.rikkabot.rikkabotcore.utils.Regex;
 
 import java.util.regex.Matcher;

@@ -1,7 +1,6 @@
-package com.rikkabot.rikkabotcore.networking;
+package com.rikkabot.rikkabotcore.net;
 
 import com.manulaiko.tabitha.Console;
-import sun.net.www.protocol.http.*;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
