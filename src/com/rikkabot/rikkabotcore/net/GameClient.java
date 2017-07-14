@@ -4,8 +4,8 @@ import com.manulaiko.tabitha.Console;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
+
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
 
 /**
@@ -18,7 +18,7 @@ import lombok.experimental.Accessors;
  *
  * @author Manulaiko <manulaiko@gmail.com>
  */
-@Accessors @Data @RequiredArgsConstructor
+@Accessors @Data
 public class GameClient {
     /**
      * Remote address to connect.
@@ -36,11 +36,18 @@ public class GameClient {
     private GamePipeline pipeline = new GamePipeline();
 
     /**
+     * Constructor.
+     */
+    public GameClient(String address, int port) {
+        this.address(address)
+            .port(port);
+    }
+
+    /**
      * Connects to the remote address.
      */
-    public boolean connect() {
+    public void connect() {
         Console.debug("Stabilising a connection to "+ this.address() +" on port "+ this.port() +"...");
-
 
         NioEventLoopGroup workerGroup = new NioEventLoopGroup();
         Bootstrap boot = new Bootstrap();

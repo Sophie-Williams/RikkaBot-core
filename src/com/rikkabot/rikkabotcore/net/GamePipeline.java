@@ -11,6 +11,9 @@ import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 import io.netty.util.CharsetUtil;
 
+import com.rikkabot.rikkabotcore.bot.GameCommandLookup;
+import com.rikkabot.rikkabotcore.bot.GameConnection;
+
 /**
  * Game pipeline.
  * ==============
