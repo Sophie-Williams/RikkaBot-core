@@ -1,5 +1,7 @@
 package com.rikkabot.rikkabotcore.arguments;
 
+import com.rikkabot.rikkabotcore.Settings;
+
 import com.manulaiko.tabitha.Console;
 import com.manulaiko.tabitha.utils.Argument;
 
@@ -32,7 +34,8 @@ public class Debug extends Argument {
      */
     @Override
     public void handle() {
-        Console.debug = true;
+        Console.debug  = true;
+        Settings.debug = true;
 
         Console.debug("Running in debug mode!");
     }
