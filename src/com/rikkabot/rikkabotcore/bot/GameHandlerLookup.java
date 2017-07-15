@@ -3,12 +3,13 @@ package com.rikkabot.rikkabotcore.bot;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.rikkabot.rikkabotcore.bot.commands.Command;
+import lombok.Data;
+import lombok.experimental.Accessors;
 
 import com.manulaiko.tabitha.Console;
 
-import lombok.Data;
-import lombok.experimental.Accessors;
+import com.rikkabot.rikkabotcore.bot.commands.Command;
+import com.rikkabot.rikkabotcore.bot.handlers.Handler;
 
 /**
  * Game handler lookup.
@@ -20,10 +21,44 @@ import lombok.experimental.Accessors;
  */
 @Accessors @Data
 public class GameHandlerLookup {
+    ///////////////////////////////////
+    // Static methods and properties //
+    ///////////////////////////////////
+    /**
+     * Singleton instance.
+     */
+    private static GameHandlerLookup instance;
+
+    /**
+     * Returns the singleton instance.
+     *
+     * @return Singleton instance.
+     */
+    public static GameHandlerLookup instance()
+    {
+        if(GameHandlerLookup.instance == null) {
+            GameHandlerLookup.instance = new GameHandlerLookup();
+        }
+
+        return GameHandlerLookup.instance;
+    }
+
+    ///////////////////////////////////////
+    // Non static methods and properties //
+    ///////////////////////////////////////
     /**
      * Handlers for the available commands.
      */
     private Map<Short, Class> handlers = new HashMap<>();
+
+    /**
+     * Constructor.
+     *
+     * Sets available handlers.
+     */
+    public GameHandlerLookup() {
+        // TODO populate `this.handlers`: `this.handlers().put(Command.ID, Handler.class);`
+    }
 
     /**
      * Finds and returns a handler for the given command.
