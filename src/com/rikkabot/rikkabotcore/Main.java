@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import com.rikkabot.rikkabotcore.arguments.Debug;
+import com.rikkabot.rikkabotcore.arguments.ShowGUI;
 
 import com.manulaiko.tabitha.Console;
 import com.manulaiko.tabitha.utils.ArgumentParser;
@@ -63,6 +64,7 @@ public class Main extends Application {
         ArgumentParser ap = new ArgumentParser(args);
 
         ap.add(new Debug());
+        ap.add(new ShowGUI());
 
         ap.parse();
     }
