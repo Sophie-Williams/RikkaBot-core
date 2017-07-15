@@ -2,10 +2,8 @@ package com.rikkabot.rikkabotcore;
 
 import java.io.File;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.experimental.Accessors;
 
 /**
  * Settings class.

@@ -1,5 +1,10 @@
 package com.rikkabot.rikkabotcore;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.security.Policy;
+
 import com.manulaiko.tabitha.Console;
 import com.manulaiko.tabitha.utils.ArgumentParser;
 import com.manulaiko.tabitha.utils.CommandPrompt;
@@ -36,11 +41,7 @@ public class Main {
             return;
         }
 
-        Console.debug("Starting command prompt...");
-
-        CommandPrompt cp = new CommandPrompt();
-
-        cp.start();
+        Main.startCommandPrompt();
     }
 
     /**
@@ -59,10 +60,22 @@ public class Main {
     }
 
     /**
+     * Starts the command prompt.
+     */
+    private static void startCommandPrompt() {
+        Console.debug("Starting command prompt...");
+
+        CommandPrompt cp = new CommandPrompt();
+
+        cp.start();
+    }
+
+    /**
      * Starts the GUI from specified jar in settings.
      */
     private static void startGUI() {
-
+        Policy.setPolicy(new PluginPolicy());
+        System.setSecurityManager(new SecurityManager());
     }
 
     /**
