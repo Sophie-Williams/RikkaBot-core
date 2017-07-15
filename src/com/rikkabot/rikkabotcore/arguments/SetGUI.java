@@ -42,7 +42,7 @@ public class SetGUI extends Argument {
      */
     @Override
     public void handle() {
-        if(this.valueIsValid()) {
+        if(!this.valueIsValid()) {
             this.printUsage();
             Settings.showGUI(false);
 
