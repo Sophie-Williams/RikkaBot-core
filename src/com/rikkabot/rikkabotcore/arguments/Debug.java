@@ -35,7 +35,7 @@ public class Debug extends Argument {
     @Override
     public void handle() {
         Console.debug  = true;
-        Settings.debug = true;
+        Settings.debug(true);
 
         Console.debug("Running in debug mode!");
     }

@@ -1,25 +1,27 @@
 package com.rikkabot.rikkabotcore.arguments;
 
+import java.io.File;
+
 import com.rikkabot.rikkabotcore.Settings;
 
 import com.manulaiko.tabitha.Console;
 import com.manulaiko.tabitha.utils.Argument;
 
 /**
- * Show GUI argument.
- * ==================
+ * Set GUI argument.
+ * =================
  *
- * Sets whether the GUI should be rendered or not.
+ * Sets which GUI to display
  *
  * Example:
  *
  * ```
- * java -jar rikkaBot.jar --showGUI=false
+ * java -jar RikkaBot.jar --setGUI=gui/default.jar
  * ```
  *
  * @author Manulaiko <manulaiko@gmail.com>
  */
-public class ShowGUI extends Argument {
+public class SetGUI extends Argument {
     /**
      * Checks that the argument can be handled
      * by this instance.
@@ -31,7 +33,7 @@ public class ShowGUI extends Argument {
     public boolean canHandle(String arg) {
         return (
                 arg.equalsIgnoreCase("-s") ||
-                arg.equalsIgnoreCase("--showGUI")
+                arg.equalsIgnoreCase("--setGUI")
         );
     }
 
@@ -40,31 +42,30 @@ public class ShowGUI extends Argument {
      */
     @Override
     public void handle() {
-        String value = super.value();
-        if (value.isEmpty()) {
+        if(this.valueIsValid()) {
             this.printUsage();
+            Settings.showGUI(false);
 
             return;
         }
 
-        boolean show;
-        try {
-            show = Boolean.parseBoolean(value);
-        } catch (Exception e) {
-            if (Settings.debug) {
-                Console.print(e);
-            }
+        File gui = new File(super.value());
 
-            this.printUsage();
+        Settings.showGUI(gui.isFile());
+        Settings.gui(gui);
 
-            return;
-        }
-
-        Settings.showGUI = show;
-
-        if (!show) {
+        if (!Settings.showGUI()) {
             Console.debug("Running in CLI mode!");
         }
+    }
+
+    /**
+     * Checks that the argument value is valid or not.
+     */
+    private boolean valueIsValid() {
+        String value = super.value();
+
+        return !value.isEmpty() && value.endsWith(".jar");
     }
 
     /**
@@ -72,7 +73,7 @@ public class ShowGUI extends Argument {
      */
     private void printUsage() {
         Console.println("Usage:");
-        Console.println("    java -jar rikkaBot.jar --showGUI=false");
-        Console.println("Defaulting to `true`!");
+        Console.println("    java -jar RikkaBot.jar --setGUI=gui/default.jar");
+        Console.println("Defaulting to CLI mode!");
     }
 }

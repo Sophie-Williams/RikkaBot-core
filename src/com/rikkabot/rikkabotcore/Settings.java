@@ -1,5 +1,10 @@
 package com.rikkabot.rikkabotcore;
 
+import java.io.File;
+
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Settings class.
  * ===============
@@ -12,10 +17,18 @@ public class Settings {
     /**
      * Whether we're running in debug mode or not.
      */
-    public static boolean debug = false;
+    @Getter @Setter
+    private static boolean debug = false;
 
     /**
      * Whether we should start the GUI or not.
      */
-    public static boolean showGUI = true;
+    @Getter @Setter
+    private static boolean showGUI = true;
+
+    /**
+     * GUI to render.
+     */
+    @Getter @Setter
+    private static File gui = new File("gui/default.jar");
 }
