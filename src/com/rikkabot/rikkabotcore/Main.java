@@ -7,10 +7,22 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+/**
+ * Main application class.
+ * =======================
+ *
+ * Entry point of the application.
+ */
 public class Main extends Application {
-
+    /**
+     * Loads and starts the GUI.
+     *
+     * @param primaryStage Application GUI.
+     *
+     * @throws Exception If something goes wrong.
+     */
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("mainWindow.fxml"));
         primaryStage.setTitle("RikkaBot - 0 accounts running");
         primaryStage.setScene(new Scene(root, 600, 349));
@@ -19,8 +31,12 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-
+    /**
+     * Main method.
+     *
+     * @param args Command line arguments.
+     */
     public static void main(String[] args) {
-        launch(args);
+        Main.launch(args);
     }
 }
