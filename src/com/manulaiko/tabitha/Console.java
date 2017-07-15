@@ -3,6 +3,7 @@ package com.manulaiko.tabitha;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Scanner;
 
 /**
 * Console class.
@@ -34,6 +35,8 @@ public class Console
     /////////////////////////////
     // End Constant definition //
     /////////////////////////////
+
+    private static Scanner consoleScanner = new Scanner(System.in);
 
     /**
      * Whether to print caller info or not.
@@ -222,7 +225,7 @@ public class Console
      */
     public static String readLine()
     {
-        return System.console().readLine();
+        return consoleScanner.nextLine();
     }
 
     /**
