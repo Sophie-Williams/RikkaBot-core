@@ -45,7 +45,7 @@ public class Help extends Argument {
                 "Available arguments:",
                 "    -h      --help         Prints this page and exists.",
                 "    -d      --debug        Enables debug mode (default = false).",
-                "    -s=bool --showGUI=bool Sets whether the GUI should be rendered or not (default = true).",
+                "    -s=gui  --setGUI=gui   Sets the gui to load (default = gui/default.jar).",
                 "",
                 "Examples:",
                 "    java -jar RikkaBot.jar -d",
