@@ -4,6 +4,8 @@ import com.manulaiko.tabitha.Console;
 import com.manulaiko.tabitha.utils.ArgumentParser;
 import com.manulaiko.tabitha.utils.CommandPrompt;
 
+import com.rikkabot.rikkabotcore.plugin.API;
+import com.rikkabot.rikkabotcore.plugin.gui.GUIManager;
 import com.rikkabot.rikkabotcore.arguments.Debug;
 import com.rikkabot.rikkabotcore.arguments.Help;
 import com.rikkabot.rikkabotcore.arguments.SetGUI;

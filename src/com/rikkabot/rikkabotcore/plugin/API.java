@@ -1,4 +1,4 @@
-package com.rikkabot.rikkabotcore;
+package com.rikkabot.rikkabotcore.plugin;
 
 /**
  * API interface.

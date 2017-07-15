@@ -1,4 +1,4 @@
-package com.rikkabot.rikkabotcore;
+package com.rikkabot.rikkabotcore.plugin.gui;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +13,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import com.manulaiko.tabitha.Console;
+
+import com.rikkabot.rikkabotcore.Main;
+import com.rikkabot.rikkabotcore.plugin.PluginPolicy;
 
 /**
  * GUI Manager.

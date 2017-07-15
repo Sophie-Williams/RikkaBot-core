@@ -1,4 +1,6 @@
-package com.rikkabot.rikkabotcore;
+package com.rikkabot.rikkabotcore.plugin.gui;
+
+import com.rikkabot.rikkabotcore.plugin.API;
 
 /**
  * GUI Interface.

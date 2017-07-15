@@ -1,4 +1,4 @@
-package com.rikkabot.rikkabotcore;
+package com.rikkabot.rikkabotcore.plugin;
 
 import java.security.*;
 import java.util.regex.Matcher;
