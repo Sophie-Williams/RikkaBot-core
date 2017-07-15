@@ -1,5 +1,7 @@
 package com.rikkabot.rikkabotcore;
 
+import java.io.File;
+
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,4 +27,10 @@ public class Settings {
      */
     @Getter @Setter
     private static boolean showGUI = true;
+
+    /**
+     * GUI to render.
+     */
+    @Getter @Setter
+    private static File gui = new File("gui/default.jar");
 }
