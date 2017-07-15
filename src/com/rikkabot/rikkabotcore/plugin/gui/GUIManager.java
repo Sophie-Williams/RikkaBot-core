@@ -43,7 +43,6 @@ public class GUIManager {
         //Policy.setPolicy(new PluginPolicy());
         //System.setSecurityManager(new SecurityManager());
 
-
         String mainClass = this.getMainClass(gui);
         if(mainClass.isEmpty()) {
             return false;
