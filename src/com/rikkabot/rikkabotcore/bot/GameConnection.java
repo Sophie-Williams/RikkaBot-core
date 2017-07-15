@@ -2,6 +2,7 @@ package com.rikkabot.rikkabotcore.bot;
 
 import io.netty.buffer.ByteBufOutputStream;
 import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelFuture;
 import io.netty.channel.socket.SocketChannel;
 
 import lombok.Data;
@@ -58,7 +59,6 @@ public class GameConnection {
     public void send(@NonNull Command command) {
         try {
             ByteBufOutputStream outputStream = new ByteBufOutputStream(Unpooled.buffer());
-            outputStream.writeShort(command.id());
             command.write(outputStream);
 
             byte[] bytes = outputStream.buffer().array();
@@ -66,11 +66,22 @@ public class GameConnection {
                 bytes = EncryptionMiddleware.encrypt(bytes);
             }
 
+            outputStream.buffer().clear();
+            outputStream.buffer().writeBytes(bytes);
+
+            Console.debug("Sending command "+ command.getClass().getName() +"...");
             this.channel()
-                .writeAndFlush(bytes)
-                .addListener((f)->{
-                    Console.debug("Command sent: "+ command.getClass().getName());
-                });
+                    .writeAndFlush(outputStream.buffer())
+                    .addListener((f)->{
+                        if (!f.isSuccess()) {
+                            Console.debug("Couldn't send the command!");
+                            Console.debug(f.cause());
+
+                            return;
+                        }
+
+                        Console.debug("Command sent: "+ command.getClass().getName());
+                    });
         } catch (Exception e) {
             Console.print(e);
         }
