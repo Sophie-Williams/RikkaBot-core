@@ -83,4 +83,27 @@ public class Main extends Application {
 
         ap.parse();
     }
+
+    /**
+     * Finishes execution.
+     *
+     * @param code     Exit code.
+     * @param messages Messages to print before exiting.
+     */
+    public static void exit(int code, String... messages) {
+        for(String message : messages) {
+            Console.print(message);
+        }
+
+        System.exit(code);
+    }
+
+    /**
+     * Finishes execution.
+     *
+     * @param messages Messages to print before exiting.
+     */
+    public static void exit(String... messages) {
+        Main.exit(0, messages);
+    }
 }

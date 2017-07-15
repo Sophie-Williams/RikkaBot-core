@@ -34,27 +34,25 @@ public class Help extends Argument {
      */
     @Override
     public void handle() {
-        Console.println(
-                "RikkaBot v"+ Main.version +"\n" +
-                "\n" +
-                "The best open-source DarkOrbit packet bot.\n" +
-                "\n" +
-                "Usage:\n" +
-                "    java -jar RikkaBot.jar ([arguments])\n" +
-                "\n" +
-                "Available arguments:\n" +
-                "    -h      --help         Prints this page and exists.\n" +
-                "    -d      --debug        Enables debug mode (default = false).\n" +
-                "    -s=bool --showGUI=bool Sets whether the GUI should be rendered or not (default = true).\n" +
-                "\n" +
-                "Examples:\n" +
-                "    java -jar RikkaBot.jar -d\n" +
-                "    java -jar RikkaBot.jar --showGUI=false\n" +
-                "\n" +
-                "Sources are available in GitHub: https://github.com/RikkaBot/RikkaBot-core\n" +
+        Main.exit(
+                "RikkaBot v"+ Main.version,
+                "",
+                "The best open-source DarkOrbit packet bot.",
+                "",
+                "Usage:",
+                "    java -jar RikkaBot.jar ([arguments])",
+                "",
+                "Available arguments:",
+                "    -h      --help         Prints this page and exists.",
+                "    -d      --debug        Enables debug mode (default = false).",
+                "    -s=bool --showGUI=bool Sets whether the GUI should be rendered or not (default = true).",
+                "",
+                "Examples:",
+                "    java -jar RikkaBot.jar -d",
+                "    java -jar RikkaBot.jar --showGUI=false",
+                "",
+                "Sources are available in GitHub: https://github.com/RikkaBot/RikkaBot-core",
                 "For support and updates join our discord server: https://discord.gg/HP68ECx"
         );
-
-        System.exit(0);
     }
 }
