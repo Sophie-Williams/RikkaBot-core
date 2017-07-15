@@ -7,6 +7,9 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import com.manulaiko.tabitha.Console;
+import com.manulaiko.tabitha.utils.ArgumentParser;
+
 /**
  * Main application class.
  * =======================
@@ -14,6 +17,11 @@ import javafx.stage.Stage;
  * Entry point of the application.
  */
 public class Main extends Application {
+    /**
+     * Application version.
+     */
+    public static final String version = "0.0.0";
+
     /**
      * Loads and starts the GUI.
      *
@@ -37,6 +45,21 @@ public class Main extends Application {
      * @param args Command line arguments.
      */
     public static void main(String[] args) {
+        Main.parseArguments(args);
+
+        Console.println("RikkaBot v"+ Main.version);
+
         Main.launch(args);
+    }
+
+    /**
+     * Parses command line arguments.
+     *
+     * @param args Command line arguments.
+     */
+    private static void parseArguments(String[] args) {
+        ArgumentParser ap = new ArgumentParser(args);
+
+        ap.parse();
     }
 }
