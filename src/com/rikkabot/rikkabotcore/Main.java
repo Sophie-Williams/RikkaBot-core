@@ -92,7 +92,7 @@ public class Main extends Application {
      */
     public static void exit(int code, String... messages) {
         for(String message : messages) {
-            Console.print(message);
+            Console.println(message);
         }
 
         System.exit(code);
