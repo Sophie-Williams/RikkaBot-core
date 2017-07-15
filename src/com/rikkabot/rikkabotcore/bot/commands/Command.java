@@ -54,4 +54,13 @@ public abstract class Command
      * @throws IOException In case the read failed.
      */
     public abstract void read(DataInput input) throws IOException;
+
+    /**
+     * Checks that the packet needs encryption or not.
+     *
+     * @return Whether this command needs encryption or not.
+     */
+    public boolean needsEncryption() {
+        return true;
+    }
 }
