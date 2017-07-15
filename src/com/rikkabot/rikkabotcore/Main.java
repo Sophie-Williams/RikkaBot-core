@@ -1,10 +1,5 @@
 package com.rikkabot.rikkabotcore;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.security.Policy;
-
 import com.manulaiko.tabitha.Console;
 import com.manulaiko.tabitha.utils.ArgumentParser;
 import com.manulaiko.tabitha.utils.CommandPrompt;
@@ -24,6 +19,16 @@ public class Main {
      * Application version.
      */
     public static final String version = "0.0.0";
+
+    /**
+     * API instance.
+     */
+    public static final API api = new API() {};
+
+    /**
+     * GUI Manager.
+     */
+    public static final GUIManager guiManager = new GUIManager();
 
     /**
      * Main method.
@@ -74,8 +79,11 @@ public class Main {
      * Starts the GUI from specified jar in settings.
      */
     private static void startGUI() {
-        Policy.setPolicy(new PluginPolicy());
-        System.setSecurityManager(new SecurityManager());
+        if(!Main.guiManager.start(Settings.gui())) {
+            Console.println("Can't start GUI! Defaulting to CLI...");
+
+            Main.startCommandPrompt();
+        }
     }
 
     /**
