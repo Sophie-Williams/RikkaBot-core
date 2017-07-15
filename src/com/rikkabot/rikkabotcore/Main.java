@@ -12,6 +12,7 @@ import com.rikkabot.rikkabotcore.arguments.ShowGUI;
 
 import com.manulaiko.tabitha.Console;
 import com.manulaiko.tabitha.utils.ArgumentParser;
+import com.manulaiko.tabitha.utils.CommandPrompt;
 
 /**
  * Main application class.
@@ -52,7 +53,19 @@ public class Main extends Application {
 
         Console.println("RikkaBot v"+ Main.version);
 
-        Main.launch(args);
+        if (Settings.showGUI) {
+            Console.debug("Starting GUI...");
+
+            Main.launch(args);
+
+            return;
+        }
+
+        Console.debug("Starting command prompt...");
+
+        CommandPrompt cp = new CommandPrompt();
+
+        cp.start();
     }
 
     /**

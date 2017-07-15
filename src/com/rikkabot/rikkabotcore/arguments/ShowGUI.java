@@ -62,7 +62,7 @@ public class ShowGUI extends Argument {
 
         Settings.showGUI = show;
 
-        if(!show) {
+        if (!show) {
             Console.debug("Running in CLI mode!");
         }
     }
