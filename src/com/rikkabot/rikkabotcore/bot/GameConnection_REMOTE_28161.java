@@ -41,8 +41,8 @@ public class GameConnection {
      */
     public GameConnection(@NonNull SocketChannel ch, @NonNull Hero hero) {
         this.channel(ch)
-                .hero(hero)
-                .hero().gameConnection(this);
+            .hero(hero)
+            .hero().gameConnection(this);
     }
 
     /**
@@ -74,17 +74,17 @@ public class GameConnection {
 
             Console.debug("Sending command "+ command.getClass().getName() +"...");
             this.channel()
-                    .writeAndFlush(outputStream.buffer())
-                    .addListener((f)->{
-                        if (!f.isSuccess()) {
-                            Console.debug("Couldn't send the command!");
-                            Console.debug(f.cause());
+                .writeAndFlush(outputStream.buffer())
+                .addListener((f)->{
+                    if (!f.isSuccess()) {
+                        Console.debug("Couldn't send the command!");
+                        Console.debug(f.cause());
 
-                            return;
-                        }
+                        return;
+                    }
 
-                        Console.debug("Command sent: "+ command.getClass().getName());
-                    });
+                    Console.debug("Command sent: "+ command.getClass().getName());
+                });
         } catch (Exception e) {
             Console.print(e);
         }

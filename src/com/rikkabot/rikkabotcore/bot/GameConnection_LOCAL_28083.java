@@ -2,6 +2,7 @@ package com.rikkabot.rikkabotcore.bot;
 
 import io.netty.buffer.ByteBufOutputStream;
 import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelFuture;
 import io.netty.channel.socket.SocketChannel;
 
 import lombok.Data;
@@ -41,14 +42,10 @@ public class GameConnection {
      */
     public GameConnection(@NonNull SocketChannel ch, @NonNull Hero hero) {
         this.channel(ch)
-                .hero(hero)
-                .hero().gameConnection(this);
-    }
+            .hero(hero);
 
-    /**
-     * Fired when the connection has been stablised.
-     */
-    public void onConnected() {
+        this.hero().gameConnection(this);
+
         Console.debug("Connected to game sever!");
 
         this.hero().onConnected();
