@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import com.rikkabot.rikkabotcore.arguments.Debug;
+import com.rikkabot.rikkabotcore.arguments.Help;
 import com.rikkabot.rikkabotcore.arguments.ShowGUI;
 
 import com.manulaiko.tabitha.Console;
@@ -78,6 +79,7 @@ public class Main extends Application {
 
         ap.add(new Debug());
         ap.add(new ShowGUI());
+        ap.add(new Help());
 
         ap.parse();
     }
