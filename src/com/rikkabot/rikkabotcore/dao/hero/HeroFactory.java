@@ -28,7 +28,7 @@ public class HeroFactory extends Factory<Hero> {
         String mapRev = httpClient.get("https://" + server + ".darkorbit.com/indexInternal.es?action=internalMapRevolution");
         Matcher match  = Regex.match(".*\"userID\": \"([0-9]+)\",\"sessionID\": \"(.+?)\".*\"pid\": \"([0-9]+)\".*\"mapID\": \"([0-9]+)\"", mapRev);
 
-        Hero h = new Hero(username, password, server, Integer.parseInt(match.group(1)));
+        Hero h = new Hero(username, password, server, Integer.parseInt(match.group(1)), Integer.parseInt(match.group(4)), httpClient);
 
         super.add(h.userId(), h);
 
