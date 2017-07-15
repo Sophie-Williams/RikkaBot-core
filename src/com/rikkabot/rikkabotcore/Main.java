@@ -4,6 +4,7 @@ import com.manulaiko.tabitha.Console;
 import com.manulaiko.tabitha.utils.ArgumentParser;
 import com.manulaiko.tabitha.utils.CommandPrompt;
 
+import com.rikkabot.rikkabotcore.commands.Login;
 import com.rikkabot.rikkabotcore.plugin.API;
 import com.rikkabot.rikkabotcore.plugin.gui.GUIManager;
 import com.rikkabot.rikkabotcore.arguments.Debug;
@@ -73,6 +74,8 @@ public class Main {
         Console.debug("Starting command prompt...");
 
         CommandPrompt cp = new CommandPrompt();
+
+        cp.addCommand(new Login());
 
         cp.start();
     }

@@ -40,8 +40,8 @@ public class GUIManager {
      * @return Whether the GUI could be started or not.
      */
     public boolean start(File gui) {
-        Policy.setPolicy(new PluginPolicy());
-        System.setSecurityManager(new SecurityManager());
+        //Policy.setPolicy(new PluginPolicy());
+        //System.setSecurityManager(new SecurityManager());
 
 
         String mainClass = this.getMainClass(gui);
