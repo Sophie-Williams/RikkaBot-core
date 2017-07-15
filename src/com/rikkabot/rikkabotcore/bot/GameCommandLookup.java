@@ -17,6 +17,7 @@ import lombok.experimental.Accessors;
 import com.manulaiko.tabitha.Console;
 
 import com.rikkabot.rikkabotcore.bot.commands.Command;
+import com.rikkabot.rikkabotcore.bot.handlers.Handler;
 
 /**
  * Game command lookup.
@@ -46,7 +47,6 @@ public class GameCommandLookup extends SimpleChannelInboundHandler<ByteBuf> {
     public GameCommandLookup(GameConnection connection) {
         this.connection(connection);
 
-        // TODO populate `this.commands`
         this.commands.put(VersionCommand.ID, VersionCommand.class);
         this.commands.put(HandshakeCommand.ID, HandshakeCommand.class);
         this.commands.put(ObfuscationCommand.ID, ObfuscationCommand.class);
@@ -112,10 +112,19 @@ public class GameCommandLookup extends SimpleChannelInboundHandler<ByteBuf> {
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, ByteBuf msg) throws Exception {
         ByteBufInputStream inputStream = new ByteBufInputStream(msg);
-        Command command = this.findCommandFor(inputStream);
 
-        if(command == null) {
+        Command command = this.findCommandFor(inputStream);
+        if (command == null) {
             return;
         }
+
+        Handler handler = GameHandlerLookup.instance().handler(this.connection(), command);
+        if (handler == null) {
+            Console.debug("Received command with ID "+ command.id() +" doesn't have an associated handler!");
+
+            return;
+        }
+
+        handler.handle();
     }
 }
