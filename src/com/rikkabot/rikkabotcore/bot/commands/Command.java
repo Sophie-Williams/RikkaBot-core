@@ -22,7 +22,7 @@ public abstract class Command
     /**
      * Command ID.
      */
-    private Short id;
+    private short id;
 
     /**
      * Writes the command to the output stream.

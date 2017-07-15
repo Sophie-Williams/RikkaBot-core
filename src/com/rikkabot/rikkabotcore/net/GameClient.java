@@ -60,6 +60,18 @@ public class GameClient {
         boot.group(workerGroup)
             .channel(NioSocketChannel.class)
             .handler(this.pipeline())
-            .connect(this.address(), this.port());
+            .connect(this.address(), this.port())
+            .addListener((f)->{
+                if(!f.isSuccess()) {
+                    Console.debug("Couldn't connect to "+ this.address() +" on port "+ this.port() +"!");
+                    Console.debug(f.cause());
+
+                    return;
+                }
+
+                Console.debug("Connected to "+ this.address() +" on port "+ this.port() +"!");
+
+                this.pipeline().connection().onConnected();
+            });
     }
 }

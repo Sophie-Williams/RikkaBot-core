@@ -41,10 +41,14 @@ public class GameConnection {
      */
     public GameConnection(@NonNull SocketChannel ch, @NonNull Hero hero) {
         this.channel(ch)
-            .hero(hero);
+            .hero(hero)
+            .hero().gameConnection(this);
+    }
 
-        this.hero().gameConnection(this);
-
+    /**
+     * Fired when the connection has been stablised.
+     */
+    public void onConnected() {
         Console.debug("Connected to game sever!");
 
         this.hero().onConnected();
@@ -58,7 +62,6 @@ public class GameConnection {
     public void send(@NonNull Command command) {
         try {
             ByteBufOutputStream outputStream = new ByteBufOutputStream(Unpooled.buffer());
-            outputStream.writeShort(command.id());
             command.write(outputStream);
 
             byte[] bytes = outputStream.buffer().array();
@@ -66,9 +69,20 @@ public class GameConnection {
                 bytes = EncryptionMiddleware.encrypt(bytes);
             }
 
+            outputStream.buffer().clear();
+            outputStream.buffer().writeBytes(bytes);
+
+            Console.debug("Sending command "+ command.getClass().getName() +"...");
             this.channel()
-                .writeAndFlush(bytes)
+                .writeAndFlush(outputStream.buffer())
                 .addListener((f)->{
+                    if (!f.isSuccess()) {
+                        Console.debug("Couldn't send the command!");
+                        Console.debug(f.cause());
+
+                        return;
+                    }
+
                     Console.debug("Command sent: "+ command.getClass().getName());
                 });
         } catch (Exception e) {

@@ -26,13 +26,17 @@ import com.rikkabot.rikkabotcore.dao.hero.Hero;
  *
  * @author Manulaiko <manulaiko@gmail.com>
  */
-@Accessors
-@Data
+@Accessors @Data
 public class GamePipeline extends ChannelInitializer<SocketChannel> {
     /**
      * Hero that's going to connect.
      */
     private Hero hero;
+
+    /**
+     * Game connection.
+     */
+    private GameConnection connection;
 
     /**
      * This method will be called once the {@link Channel} was registered. After the method returns this instance
@@ -46,12 +50,12 @@ public class GamePipeline extends ChannelInitializer<SocketChannel> {
     @Override
     protected void initChannel(SocketChannel ch) throws Exception {
         ChannelPipeline pipeline   = ch.pipeline();
-        GameConnection  connection = new GameConnection(ch, hero);
+        this.connection(new GameConnection(ch, this.hero()));
 
         pipeline.addLast("frameDecoder", new FrameDecoder())
                 //.addLast("stringDecoder", new StringDecoder(CharsetUtil.UTF_8))
                 //.addLast("stringEncoder", new StringEncoder(CharsetUtil.UTF_8))
-                .addLast("commandLookup", new GameCommandLookup(connection))
+                .addLast("commandLookup", new GameCommandLookup(this.connection()))
                 .addLast("lengthPrepender", new LengthFieldPrepender(Short.BYTES));
     }
 
