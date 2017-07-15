@@ -1,5 +1,6 @@
 package com.rikkabot.rikkabotcore.bot.handlers;
 
+import com.manulaiko.tabitha.Console;
 import com.rikkabot.rikkabotcore.bot.GameConnection;
 import com.rikkabot.rikkabotcore.bot.commands.Command;
 import com.rikkabot.rikkabotcore.bot.commands.incoming.VersionCommand;
@@ -19,6 +20,7 @@ public class VersionCommandHandler extends Handler<VersionCommand> {
     }
     @Override
     public void handle() {
+        Console.debug("Received: vch");
         if (command().compatible) {
             int _loc5_ = 0;
             String _loc6_ = null;
@@ -36,6 +38,8 @@ public class VersionCommandHandler extends Handler<VersionCommand> {
 
             HandshakeRequest handshakeRequest = new HandshakeRequest(_loc3_.toByteArray());
             connection().send(handshakeRequest);
+
+            Console.debug("Sent handshake request with key: " + Base64.getEncoder().encodeToString(_loc3_.toByteArray()));
         }
     }
 }

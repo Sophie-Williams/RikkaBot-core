@@ -1,6 +1,8 @@
 package com.rikkabot.rikkabotcore.dao.hero;
 
+import com.manulaiko.tabitha.Console;
 import com.rikkabot.rikkabotcore.bot.GameConnection;
+import com.rikkabot.rikkabotcore.bot.commands.outgoing.VersionRequest;
 import com.rikkabot.rikkabotcore.dao.DAO;
 import com.rikkabot.rikkabotcore.net.GameClient;
 import com.rikkabot.rikkabotcore.net.HttpClient;
@@ -28,8 +30,16 @@ public class Hero extends DAO
     private GameConnection gameConnection;
 
     public void connect() {
-        String ip = Regex.match("<map id=\\\"" + this.mapId + "\\\"><gameserverip>(.*?)<\\/", httpClient.get("https://darkorbit.com/spacemap/xml/maps.php")).group(1);
+        Console.debug("Connecting to mapId: " + this.mapId);
+
+        String maps = httpClient.get("https://darkorbit.com/spacemap/xml/maps.php");
+        String ip = Regex.match("<map id=\\\"10\\\"><gameserverIP>(.*?)<\\/", maps).group(1);
+        Console.debug("Matched IP Address: " + ip + ", connecting...");
         GameClient gameClient = new GameClient(ip, 8080);
         gameClient.connect(this);
+    }
+
+    public void onConnected() {
+        this.gameConnection.send(new VersionRequest(0, 105, 7));
     }
 }

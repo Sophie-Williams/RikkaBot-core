@@ -18,5 +18,9 @@ public class MainWindowController {
         Hero hero = FactoryManager.heroes.login(usernameField.getText(), passwordField.getText());
 
         Console.debug("Successfully logged in!");
+
+        Console.debug("Connecting...");
+
+        hero.connect();
     }
 }

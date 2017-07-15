@@ -46,6 +46,8 @@ public class GameConnection {
         this.hero().gameConnection(this);
 
         Console.debug("Connected to game sever!");
+
+        this.hero().onConnected();
     }
 
     /**
@@ -56,6 +58,7 @@ public class GameConnection {
     public void send(@NonNull Command command) {
         try {
             ByteBufOutputStream outputStream = new ByteBufOutputStream(Unpooled.buffer());
+            outputStream.writeShort(command.id());
             command.write(outputStream);
 
             byte[] bytes = outputStream.buffer().array();
