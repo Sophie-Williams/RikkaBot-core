@@ -8,6 +8,8 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import com.rikkabot.rikkabotcore.dao.hero.Hero;
+
 /**
  * Game client.
  * ============
@@ -45,9 +47,13 @@ public class GameClient {
 
     /**
      * Connects to the remote address.
+     *
+     * @param hero Hero that's going to connect.
      */
-    public void connect() {
+    public void connect(Hero hero) {
         Console.debug("Stabilising a connection to "+ this.address() +" on port "+ this.port() +"...");
+
+        this.pipeline().hero(hero);
 
         NioEventLoopGroup workerGroup = new NioEventLoopGroup();
         Bootstrap boot = new Bootstrap();

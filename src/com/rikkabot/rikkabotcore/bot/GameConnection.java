@@ -12,6 +12,7 @@ import com.manulaiko.tabitha.Console;
 
 import com.rikkabot.rikkabotcore.bot.commands.Command;
 import com.rikkabot.rikkabotcore.bot.middlewares.EncryptionMiddleware;
+import com.rikkabot.rikkabotcore.dao.hero.Hero;
 
 /**
  * Game connection.
@@ -29,12 +30,20 @@ public class GameConnection {
     private SocketChannel channel;
 
     /**
+     * Connection hero.
+     */
+    private Hero hero;
+
+    /**
      * Constructor.
      *
      * @param ch Socket channel.
      */
-    public GameConnection(@NonNull SocketChannel ch) {
-        this.channel(ch);
+    public GameConnection(@NonNull SocketChannel ch, @NonNull Hero hero) {
+        this.channel(ch)
+            .hero(hero);
+
+        this.hero().gameConnection(this);
 
         Console.debug("Connected to game sever!");
     }

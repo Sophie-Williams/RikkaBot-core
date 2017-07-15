@@ -1,5 +1,7 @@
 package com.rikkabot.rikkabotcore.net;
 
+import java.util.List;
+
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
@@ -7,17 +9,14 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.ByteToMessageDecoder;
-import io.netty.handler.codec.DelimiterBasedFrameDecoder;
-import io.netty.handler.codec.Delimiters;
 import io.netty.handler.codec.LengthFieldPrepender;
-import io.netty.handler.codec.string.StringDecoder;
-import io.netty.handler.codec.string.StringEncoder;
-import io.netty.util.CharsetUtil;
+
+import lombok.Data;
+import lombok.experimental.Accessors;
 
 import com.rikkabot.rikkabotcore.bot.GameCommandLookup;
 import com.rikkabot.rikkabotcore.bot.GameConnection;
-
-import java.util.List;
+import com.rikkabot.rikkabotcore.dao.hero.Hero;
 
 /**
  * Game pipeline.
@@ -27,7 +26,14 @@ import java.util.List;
  *
  * @author Manulaiko <manulaiko@gmail.com>
  */
+@Accessors
+@Data
 public class GamePipeline extends ChannelInitializer<SocketChannel> {
+    /**
+     * Hero that's going to connect.
+     */
+    private Hero hero;
+
     /**
      * This method will be called once the {@link Channel} was registered. After the method returns this instance
      * will be removed from the {@link ChannelPipeline} of the {@link Channel}.
@@ -40,7 +46,7 @@ public class GamePipeline extends ChannelInitializer<SocketChannel> {
     @Override
     protected void initChannel(SocketChannel ch) throws Exception {
         ChannelPipeline pipeline   = ch.pipeline();
-        GameConnection  connection = new GameConnection(ch);
+        GameConnection  connection = new GameConnection(ch, hero);
 
         pipeline.addLast("frameDecoder", new FrameDecoder())
                 //.addLast("stringDecoder", new StringDecoder(CharsetUtil.UTF_8))
