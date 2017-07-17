@@ -20,7 +20,6 @@ public class VersionCommandHandler extends Handler<VersionCommand> {
     }
     @Override
     public void handle() {
-        Console.debug("Received: vch");
         if (command().compatible) {
             int _loc5_ = 0;
             String _loc6_ = null;

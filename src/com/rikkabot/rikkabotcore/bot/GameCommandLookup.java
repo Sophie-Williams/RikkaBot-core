@@ -118,6 +118,8 @@ public class GameCommandLookup extends SimpleChannelInboundHandler<ByteBuf> {
             return;
         }
 
+        Console.debug("Received command: "+ command.getClass().getName());
+
         Handler handler = GameHandlerLookup.instance().handler(this.connection(), command);
         if (handler == null) {
             Console.debug("Received command with ID "+ command.id() +" doesn't have an associated handler!");
