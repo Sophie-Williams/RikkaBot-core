@@ -3,7 +3,9 @@ package com.rikkabot.rikkabotcore.bot;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.rikkabot.rikkabotcore.bot.commands.incoming.HandshakeCommand;
 import com.rikkabot.rikkabotcore.bot.commands.incoming.VersionCommand;
+import com.rikkabot.rikkabotcore.bot.handlers.HandshakeCommandHandler;
 import com.rikkabot.rikkabotcore.bot.handlers.VersionCommandHandler;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -61,6 +63,7 @@ public class GameHandlerLookup {
     public GameHandlerLookup() {
         // TODO populate `this.handlers`: `this.handlers().put(Command.ID, Handler.class);`
         this.handlers().put(VersionCommand.ID, VersionCommandHandler.class);
+        this.handlers().put(HandshakeCommand.ID, HandshakeCommandHandler.class);
     }
 
     /**

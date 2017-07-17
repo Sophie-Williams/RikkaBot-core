@@ -40,6 +40,6 @@ public class Hero extends DAO
     }
 
     public void onConnected() {
-        this.gameConnection.send(new VersionRequest(0, 105, 7));
+        this.gameConnection.send(new VersionRequest(0, 106, 1));
     }
 }
