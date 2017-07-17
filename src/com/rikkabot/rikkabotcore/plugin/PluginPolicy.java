@@ -32,7 +32,7 @@ public class PluginPolicy extends Policy {
 
         Permissions p = new Permissions();
 
-        Matcher m = Regex.match("(gui|plugin/(.*).jar$", codeSource.getLocation().toString());
+        Matcher m = Regex.match("(gui|plugin)/(.*).jar$", codeSource.getLocation().toString());
         if(!m.matches()) {
             p.add(new AllPermission());
             Console.debug("All permissions granted!");

@@ -40,13 +40,17 @@ public class GUIManager {
      * @return Whether the GUI could be started or not.
      */
     public boolean start(File gui) {
-        //Policy.setPolicy(new PluginPolicy());
-        //System.setSecurityManager(new SecurityManager());
+        Console.debug("Loading GUI from external JAR at "+ gui.getAbsolutePath());
+
+        Policy.setPolicy(new PluginPolicy());
+        System.setSecurityManager(new SecurityManager());
 
         String mainClass = this.getMainClass(gui);
         if(mainClass.isEmpty()) {
             return false;
         }
+
+        Console.debug("GUI main class from MANIFEST.mf: "+ mainClass);
 
         GUI instance = this.instance(gui, mainClass);
         if(instance == null) {
@@ -55,6 +59,8 @@ public class GUIManager {
 
         instance.bootstrap(Main.api);
         instance.show();
+
+        Console.debug("GUI loaded!");
 
         this.gui(instance);
 
