@@ -84,6 +84,7 @@ public class Main {
      * Starts the GUI from specified jar in settings.
      */
     private static void startGUI() {
+        Console.println("Starting GUI...");
         if(!Main.guiManager.start(Settings.gui())) {
             Console.println("Can't start GUI! Defaulting to CLI...");
 
