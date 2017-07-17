@@ -25,7 +25,7 @@ public class VersionCommandHandler extends Handler<VersionCommand> {
             String _loc6_ = null;
             String _loc1_ = new String();
             for (int _loc2_ = 0; _loc2_ < 128; _loc2_++) {
-                _loc5_ = (int)Math.random() * 256;
+                _loc5_ = (int)(Math.random() * 256);
                 _loc6_ = Integer.toString(_loc5_, 16);
                 if (_loc6_.length() == 1) {
                     _loc6_ = "0" + _loc6_;
@@ -37,6 +37,7 @@ public class VersionCommandHandler extends Handler<VersionCommand> {
 
             HandshakeRequest handshakeRequest = new HandshakeRequest(_loc3_.toByteArray());
             connection().send(handshakeRequest);
+
 
             Console.debug("Sent handshake request with key: " + Base64.getEncoder().encodeToString(_loc3_.toByteArray()));
         }

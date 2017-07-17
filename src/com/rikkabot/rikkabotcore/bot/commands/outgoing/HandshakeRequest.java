@@ -14,7 +14,7 @@ public class HandshakeRequest extends Command {
     /**
      * Command ID.
      */
-    public static final short ID = 13320;
+    public static final short ID = 32282;
 
     /**
      * Generated secret key
@@ -36,7 +36,7 @@ public class HandshakeRequest extends Command {
      */
     @Override
     protected void _write(DataOutput output) throws IOException {
-        output.writeShort(-11537);
+        output.writeShort(-30270);
         output.writeInt(this.secretKey.length);
         output.write(this.secretKey);
     }

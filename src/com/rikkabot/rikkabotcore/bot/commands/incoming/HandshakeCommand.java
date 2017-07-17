@@ -14,7 +14,7 @@ public class HandshakeCommand extends Command {
     /**
      * Command ID.
      */
-    public static final short ID = 26074;
+    public static final short ID = 31644;
 
     /**
      * Key of the server
@@ -42,7 +42,7 @@ public class HandshakeCommand extends Command {
     protected void _write(DataOutput output) throws IOException {
         output.writeInt(code.length);
         output.write(code, 0, code.length);
-        output.writeShort(5458);
+        output.writeShort(-20524);
     }
 
     /**
