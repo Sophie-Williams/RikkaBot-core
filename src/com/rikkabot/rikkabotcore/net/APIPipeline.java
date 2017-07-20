@@ -7,33 +7,23 @@ import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.LengthFieldPrepender;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import com.rikkabot.rikkabotcore.bot.GameCommandLookup;
-import com.rikkabot.rikkabotcore.bot.GameConnection;
-import com.rikkabot.rikkabotcore.dao.hero.Hero;
+import com.rikkabot.rikkabotcore.api.APICommandLookup;
+import com.rikkabot.rikkabotcore.api.APIConnection;
 
 /**
- * Game pipeline.
- * ==============
+ * API pipeline.
+ * =============
  *
- * Pipeline for the game connection.
+ * Pipeline for all the API connections.
  *
  * @author Manulaiko <manulaiko@gmail.com>
  */
-@Accessors @Data
-public class GamePipeline extends ChannelInitializer<SocketChannel> {
-    /**
-     * Hero that's going to connect.
-     */
-    private Hero hero;
-
-    /**
-     * Game connection.
-     */
-    private GameConnection connection;
-
+@Accessors @Data @AllArgsConstructor
+public class APIPipeline extends ChannelInitializer<SocketChannel> {
     /**
      * This method will be called once the {@link Channel} was registered. After the method returns this instance
      * will be removed from the {@link ChannelPipeline} of the {@link Channel}.
@@ -45,13 +35,11 @@ public class GamePipeline extends ChannelInitializer<SocketChannel> {
      */
     @Override
     protected void initChannel(SocketChannel ch) throws Exception {
-        ChannelPipeline pipeline   = ch.pipeline();
-        this.connection(new GameConnection(ch, this.hero()));
+        ChannelPipeline pipeline = ch.pipeline();
+        APIConnection gameConnection = new APIConnection(ch);
 
-        pipeline.addLast("frameDecoder", new FrameDecoder())
-                //.addLast("stringDecoder", new StringDecoder(CharsetUtil.UTF_8))
-                //.addLast("stringEncoder", new StringEncoder(CharsetUtil.UTF_8))
-                .addLast("commandLookup", new GameCommandLookup(this.connection()))
-                .addLast("lengthPrepender", new LengthFieldPrepender(Short.BYTES));
+        pipeline.addLast("frameDecoder", new FrameDecoder());
+        pipeline.addLast("commandLookup", new APICommandLookup(gameConnection));
+        pipeline.addLast("lengthPrepender", new LengthFieldPrepender(Short.BYTES));
     }
 }
