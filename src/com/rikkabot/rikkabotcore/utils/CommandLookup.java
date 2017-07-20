@@ -1,11 +1,8 @@
-package com.rikkabot.rikkabotcore.bot;
+package com.rikkabot.rikkabotcore.utils;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.Map;
 
-import com.rikkabot.rikkabotcore.bot.commands.incoming.HandshakeCommand;
-import com.rikkabot.rikkabotcore.bot.commands.incoming.ObfuscationCommand;
-import com.rikkabot.rikkabotcore.bot.commands.incoming.VersionCommand;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufInputStream;
 import io.netty.channel.ChannelHandlerContext;
@@ -16,49 +13,51 @@ import lombok.experimental.Accessors;
 
 import com.manulaiko.tabitha.Console;
 
-import com.rikkabot.rikkabotcore.bot.commands.Command;
-import com.rikkabot.rikkabotcore.bot.handlers.Handler;
-
 /**
- * Game command lookup.
- * ====================
+ * Command lookup.
+ * ===============
  *
- * Lookup for game commands
+ * Generic command lookup.
  *
  * @author Manulaiko <manulaiko@gmail.com>
  */
 @Accessors @Data
-public class GameCommandLookup extends SimpleChannelInboundHandler<ByteBuf> {
-    /**
-     * Game connection instance.
-     */
-    private GameConnection connection;
-
+public abstract class CommandLookup extends SimpleChannelInboundHandler<ByteBuf> {
     /**
      * Available commands.
      */
-    private HashMap<Short, Class> commands = new HashMap<>();
+    private Map<Short, Class> commands;
+
+    /**
+     * Handler lookup instance.
+     */
+    private HandlerLookup handler;
+
+    /**
+     * Connection instance.
+     */
+    private Connection connection;
 
     /**
      * Constructor.
      *
-     * @param connection Game connection;
+     * @param handler    Handler instance.
+     * @param connection Connection instance.
      */
-    public GameCommandLookup(GameConnection connection) {
-        this.connection(connection);
-
-        this.commands.put(VersionCommand.ID, VersionCommand.class);
-        this.commands.put(HandshakeCommand.ID, HandshakeCommand.class);
-        this.commands.put(ObfuscationCommand.ID, ObfuscationCommand.class);
+    public CommandLookup(HandlerLookup handler, Connection connection) {
+        this.handler(handler)
+            .connection(connection)
+            .commands(this.getCommands());
     }
 
     /**
      * Finds and instances a command for given input stream.
      *
      * @param in Input stream with command data.
+     *
      * @return Command for `in` or null.
      */
-    private Command findCommandFor(ByteBufInputStream in) {
+    protected Command findCommandFor(ByteBufInputStream in) {
         short id;
 
         try {
@@ -120,7 +119,7 @@ public class GameCommandLookup extends SimpleChannelInboundHandler<ByteBuf> {
 
         Console.debug("Received command: "+ command.getClass().getName());
 
-        Handler handler = GameHandlerLookup.instance().handler(this.connection(), command);
+        Handler handler = this.handler().handler(this.connection(), command);
         if (handler == null) {
             Console.debug("Received command with ID "+ command.id() +" doesn't have an associated handler!");
 
@@ -129,4 +128,11 @@ public class GameCommandLookup extends SimpleChannelInboundHandler<ByteBuf> {
 
         handler.handle();
     }
+
+    /**
+     * Builds and returns the map with available commands.
+     *
+     * @return Map with available commands.
+     */
+    public abstract Map<Short, Class> getCommands();
 }
