@@ -1,14 +1,16 @@
 package com.rikkabot.rikkabotcore.bot.handlers;
 
+import java.math.BigInteger;
+import java.util.Base64;
+
 import com.manulaiko.tabitha.Console;
+
 import com.rikkabot.rikkabotcore.bot.GameConnection;
 import com.rikkabot.rikkabotcore.bot.commands.Command;
 import com.rikkabot.rikkabotcore.bot.commands.incoming.VersionCommand;
 import com.rikkabot.rikkabotcore.bot.commands.outgoing.HandshakeRequest;
 import com.rikkabot.rikkabotcore.bot.middlewares.EncryptionMiddleware;
-
-import java.math.BigInteger;
-import java.util.Base64;
+import com.rikkabot.rikkabotcore.utils.Handler;
 
 /**
  * Created by piotr on 15.07.17.

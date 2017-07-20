@@ -3,17 +3,14 @@ package com.rikkabot.rikkabotcore.bot;
 import java.util.HashMap;
 import java.util.Map;
 
+import lombok.Data;
+import lombok.experimental.Accessors;
+
 import com.rikkabot.rikkabotcore.bot.commands.incoming.HandshakeCommand;
 import com.rikkabot.rikkabotcore.bot.commands.incoming.VersionCommand;
 import com.rikkabot.rikkabotcore.bot.handlers.HandshakeCommandHandler;
 import com.rikkabot.rikkabotcore.bot.handlers.VersionCommandHandler;
-import lombok.Data;
-import lombok.experimental.Accessors;
-
-import com.manulaiko.tabitha.Console;
-
-import com.rikkabot.rikkabotcore.bot.commands.Command;
-import com.rikkabot.rikkabotcore.bot.handlers.Handler;
+import com.rikkabot.rikkabotcore.utils.HandlerLookup;
 
 /**
  * Game handler lookup.
@@ -24,7 +21,7 @@ import com.rikkabot.rikkabotcore.bot.handlers.Handler;
  * @author Manulaiko <manulaiko@gmail.com>
  */
 @Accessors @Data
-public class GameHandlerLookup {
+public class GameHandlerLookup extends HandlerLookup{
     ///////////////////////////////////
     // Static methods and properties //
     ///////////////////////////////////
@@ -50,45 +47,18 @@ public class GameHandlerLookup {
     ///////////////////////////////////////
     // Non static methods and properties //
     ///////////////////////////////////////
-    /**
-     * Handlers for the available commands.
-     */
-    private Map<Short, Class> handlers = new HashMap<>();
 
     /**
      * Constructor.
      *
      * Sets available handlers.
      */
-    public GameHandlerLookup() {
-        // TODO populate `this.handlers`: `this.handlers().put(Command.ID, Handler.class);`
-        this.handlers().put(VersionCommand.ID, VersionCommandHandler.class);
-        this.handlers().put(HandshakeCommand.ID, HandshakeCommandHandler.class);
-    }
+    public Map<Short, Class> getHandlers() {
+        Map<Short, Class> handlers = new HashMap<>();
 
-    /**
-     * Finds and returns a handler for the given command.
-     *
-     * @param connection Connection that received the command.
-     * @param command    Received command.
-     *
-     * @return Handler for `command`.
-     */
-    public Handler handler(GameConnection connection, Command command) {
-        Class handlerClass = this.handlers().get(command.id());
+        handlers.put(VersionCommand.ID, VersionCommandHandler.class);
+        handlers.put(HandshakeCommand.ID, HandshakeCommandHandler.class);
 
-        if (handlerClass == null) {
-            return null;
-        }
-
-        Object handler = null;
-        try {
-            handler = handlerClass.getConstructor(GameConnection.class, Command.class)
-                                  .newInstance(connection, command);
-        } catch (Exception e) {
-            Console.print(e);
-        }
-
-        return (Handler)handler;
+        return handlers;
     }
 }

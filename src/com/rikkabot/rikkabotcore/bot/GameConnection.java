@@ -13,6 +13,7 @@ import com.manulaiko.tabitha.Console;
 import com.rikkabot.rikkabotcore.bot.commands.Command;
 import com.rikkabot.rikkabotcore.bot.middlewares.EncryptionMiddleware;
 import com.rikkabot.rikkabotcore.dao.hero.Hero;
+import com.rikkabot.rikkabotcore.utils.Connection;
 
 /**
  * Game connection.
@@ -23,12 +24,7 @@ import com.rikkabot.rikkabotcore.dao.hero.Hero;
  * @author Manulaiko <manulaiko@gmail.com>
  */
 @Accessors @Data
-public class GameConnection {
-    /**
-     * Channel connection.
-     */
-    private SocketChannel channel;
-
+public class GameConnection extends Connection {
     /**
      * Connection hero.
      */
@@ -40,13 +36,15 @@ public class GameConnection {
      * @param ch Socket channel.
      */
     public GameConnection(@NonNull SocketChannel ch, @NonNull Hero hero) {
-        this.channel(ch)
-                .hero(hero)
-                .hero().gameConnection(this);
+        super(ch);
+
+        this.hero(hero);
+
+        hero.gameConnection(this);
     }
 
     /**
-     * Fired when the connection has been stablised.
+     * Fired when the connection has been stabilised.
      */
     public void onConnected() {
         Console.debug("Connected to game sever!");
@@ -55,38 +53,30 @@ public class GameConnection {
     }
 
     /**
-     * Sends a command through the channel.
+     * Returns the output stream for a command.
      *
-     * @param command Command to send
+     * @param command Command to get output stream.
+     *
+     * @return Output stream for `command`.
      */
-    public void send(@NonNull Command command) {
+    @Override
+    protected ByteBufOutputStream getOutputStreamFor(com.rikkabot.rikkabotcore.utils.Command command) {
+        ByteBufOutputStream outputStream = new ByteBufOutputStream(Unpooled.buffer());
+
         try {
-            ByteBufOutputStream outputStream = new ByteBufOutputStream(Unpooled.buffer());
             command.write(outputStream);
 
             byte[] bytes = outputStream.buffer().array();
-            if (command.needsEncryption()) {
+            if (((Command)command).needsEncryption()) {
                 bytes = EncryptionMiddleware.encrypt(bytes);
             }
 
             outputStream.buffer().clear();
             outputStream.buffer().writeBytes(bytes);
-
-            Console.debug("Sending command "+ command.getClass().getName() +"...");
-            this.channel()
-                    .writeAndFlush(outputStream.buffer())
-                    .addListener((f)->{
-                        if (!f.isSuccess()) {
-                            Console.debug("Couldn't send the command!");
-                            Console.debug(f.cause());
-
-                            return;
-                        }
-
-                        Console.debug("Command sent: "+ command.getClass().getName());
-                    });
-        } catch (Exception e) {
+        } catch(Exception e) {
             Console.print(e);
         }
+
+        return outputStream;
     }
 }

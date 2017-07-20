@@ -1,9 +1,11 @@
 package com.rikkabot.rikkabotcore.bot.handlers;
 
 import com.manulaiko.tabitha.Console;
+
 import com.rikkabot.rikkabotcore.bot.GameConnection;
 import com.rikkabot.rikkabotcore.bot.commands.Command;
 import com.rikkabot.rikkabotcore.bot.commands.incoming.HandshakeCommand;
+import com.rikkabot.rikkabotcore.utils.Handler;
 
 /**
  * Created by piotr on 15.07.17.
