@@ -16,7 +16,7 @@ import com.rikkabot.rikkabotcore.utils.Connection;
  * @author Manulaiko <manulaiko@gmail.com>
  */
 @Accessors @Data
-public class APIConnection  extends Connection {
+public class APIConnection extends Connection {
     /**
      * Constructor.
      *
