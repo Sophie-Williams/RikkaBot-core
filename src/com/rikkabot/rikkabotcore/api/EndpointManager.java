@@ -17,7 +17,7 @@ public class EndpointManager {
     /**
      * Available endpoints.
      */
-    private Map<String, Class<Endpoint>> endpoints = new HashMap<>();
+    private Map<String, Class<IEndpoint>> endpoints = new HashMap<>();
 
     /**
      * Constructor.
@@ -31,16 +31,16 @@ public class EndpointManager {
     /**
      * Finds and returns an endpoint.
      *
-     * @param name Endpoint name.
+     * @param name IEndpoint name.
      *
-     * @return Endpoint instance or null if `name` does not exist or the endpoint can't be instanced.
+     * @return IEndpoint instance or null if `name` does not exist or the endpoint can't be instanced.
      */
-    public Endpoint find(String name) {
+    public IEndpoint find(String name) {
         if(!this.endpoints.containsKey(name)) {
             return null;
         }
 
-        Class<Endpoint> c = this.endpoints.get(name);
+        Class<IEndpoint> c = this.endpoints.get(name);
 
         try {
             return c.newInstance();
