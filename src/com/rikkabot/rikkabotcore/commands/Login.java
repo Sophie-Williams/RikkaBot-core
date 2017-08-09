@@ -1,8 +1,12 @@
 package com.rikkabot.rikkabotcore.commands;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import com.manulaiko.tabitha.Console;
 import com.manulaiko.tabitha.utils.ICommand;
 
+import com.rikkabot.rikkabotcore.Main;
 import com.rikkabot.rikkabotcore.dao.FactoryManager;
 import com.rikkabot.rikkabotcore.dao.hero.Hero;
 
@@ -31,12 +35,22 @@ public class Login implements ICommand {
             return;
         }
 
-        Console.debug("Logging in...");
+        Console.println("Logging in...");
 
-        Hero hero = FactoryManager.heroes.login(command[1], command[2]);
+        String[] args = new String[2];
+        args[0] = command[1];
+        args[1] = command[2];
 
-        Console.debug("Successfully logged in!");
+        JSONObject response = Main.endpoint.find("login").execute(new JSONArray(args));
+
+        response.getJSONArray("messages").forEach(Console::println); // so sweet
+
+        if(response.getBoolean("isError")) {
+            return;
+        }
+
         Console.debug("Connecting...");
+        Hero hero = FactoryManager.heroes.fromResponse(response);
 
         hero.connect();
     }
