@@ -37,20 +37,13 @@ public class Login implements ICommand {
 
         Console.println("Logging in...");
 
-        String[] args = new String[2];
-        args[0] = command[1];
-        args[1] = command[2];
+        Hero hero = FactoryManager.heroes.login(command[1], command[2]);
 
-        JSONObject response = Main.endpoint.find("login").execute(new JSONArray(args));
-
-        response.getJSONArray("messages").forEach(Console::println); // so sweet
-
-        if(response.getBoolean("isError")) {
+        if (hero == null) {
             return;
         }
 
         Console.debug("Connecting...");
-        Hero hero = FactoryManager.heroes.fromResponse(response);
 
         hero.connect();
     }

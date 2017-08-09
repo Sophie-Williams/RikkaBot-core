@@ -119,7 +119,7 @@ public class HTTPLogin implements IEndpoint {
 
         JSONObject response = new JSONObject();
         response.put("isError", false)
-                .put("messages", new String[] {"Successfully logged in!"})
+                .put("messages", new JSONArray(new String[] {"Successfully logged in!"}))
                 .put("result", result);
 
         Console.debug(response.toString(2));

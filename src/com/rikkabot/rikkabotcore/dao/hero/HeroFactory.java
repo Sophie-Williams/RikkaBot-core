@@ -37,6 +37,8 @@ public class HeroFactory extends Factory<Hero> {
      * @return Hero instance for response.
      */
     public Hero fromResponse(JSONObject response) {
+        response.getJSONArray("messages").forEach(Console::println); // so sweet
+
         if (response.getBoolean("isError")) {
             return null;
         }
