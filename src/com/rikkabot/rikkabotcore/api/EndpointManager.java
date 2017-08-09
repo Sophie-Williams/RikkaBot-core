@@ -5,6 +5,8 @@ import java.util.Map;
 
 import com.manulaiko.tabitha.Console;
 
+import com.rikkabot.rikkabotcore.api.endpoint.HTTPLogin;
+
 /**
  * EndpointManager class.
  * ======================
@@ -17,7 +19,7 @@ public class EndpointManager {
     /**
      * Available endpoints.
      */
-    private Map<String, Class<IEndpoint>> endpoints = new HashMap<>();
+    private Map<String, Class<? extends IEndpoint>> endpoints = new HashMap<>();
 
     /**
      * Constructor.
@@ -25,7 +27,7 @@ public class EndpointManager {
      * Sets all endpoints.
      */
     public EndpointManager() {
-        // TODO Populate `this.endpoints`
+        this.endpoints.put("httpLogin", HTTPLogin.class);
     }
 
     /**
@@ -36,11 +38,11 @@ public class EndpointManager {
      * @return IEndpoint instance or null if `name` does not exist or the endpoint can't be instanced.
      */
     public IEndpoint find(String name) {
-        if(!this.endpoints.containsKey(name)) {
+        if (!this.endpoints.containsKey(name)) {
             return null;
         }
 
-        Class<IEndpoint> c = this.endpoints.get(name);
+        Class<? extends IEndpoint> c = this.endpoints.get(name);
 
         try {
             return c.newInstance();
