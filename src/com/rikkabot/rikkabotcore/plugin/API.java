@@ -1,5 +1,7 @@
 package com.rikkabot.rikkabotcore.plugin;
 
+import com.rikkabot.rikkabotcore.api.EndpointManager;
+
 /**
  * API interface.
  * ==============
@@ -9,4 +11,10 @@ package com.rikkabot.rikkabotcore.plugin;
  * @author Manulaiko <manulaiko@gmail.com>
  */
 public interface API {
+    /**
+     * Returns the endpoint manager.
+     *
+     * @return Endpoint manager.
+     */
+    EndpointManager endpointManager();
 }
