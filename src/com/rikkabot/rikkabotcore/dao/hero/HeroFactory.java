@@ -19,12 +19,13 @@ public class HeroFactory extends Factory<Hero> {
      * @return An instance of hero.
      */
     public Hero login(String username, String password) {
-        JSONObject response = Main.endpoint.find("httpLogin")
-                                    .execute(new JSONArray(new String[] {
-                                            username,
-                                            password
-                                        }
-                                    ));
+        JSONObject response = Main.api.endpointManager()
+                               .find("httpLogin")
+                               .execute(new JSONArray(new String[] {
+                                       username,
+                                       password
+                                   }
+                               ));
 
         return this.fromResponse(response);
     }

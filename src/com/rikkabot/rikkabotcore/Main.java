@@ -4,9 +4,9 @@ import com.manulaiko.tabitha.Console;
 import com.manulaiko.tabitha.utils.ArgumentParser;
 import com.manulaiko.tabitha.utils.CommandPrompt;
 
+import com.rikkabot.rikkabotcore.api.API;
 import com.rikkabot.rikkabotcore.api.EndpointManager;
 import com.rikkabot.rikkabotcore.commands.Login;
-import com.rikkabot.rikkabotcore.plugin.API;
 import com.rikkabot.rikkabotcore.plugin.gui.GUIManager;
 import com.rikkabot.rikkabotcore.arguments.Debug;
 import com.rikkabot.rikkabotcore.arguments.Help;
@@ -27,12 +27,7 @@ public class Main {
     /**
      * API instance.
      */
-    public static final API api = new API() {};
-
-    /**
-     * Endpoint manager.
-     */
-    public static final EndpointManager endpoint = new EndpointManager();
+    public static final API api = new API();
 
     /**
      * GUI Manager.
