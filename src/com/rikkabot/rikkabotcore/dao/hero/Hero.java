@@ -7,19 +7,21 @@ import com.rikkabot.rikkabotcore.dao.DAO;
 import com.rikkabot.rikkabotcore.net.GameClient;
 import com.rikkabot.rikkabotcore.net.HttpClient;
 import com.rikkabot.rikkabotcore.utils.Regex;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.experimental.Accessors;
+import lombok.EqualsAndHashCode;
 
 /**
  * Created by piotr on 12.07.17.
  */
 
-@AllArgsConstructor @Accessors @Data
+@AllArgsConstructor @Data @EqualsAndHashCode(callSuper = true)
 public class Hero extends DAO
 {
     private String username;
     private String password;
+    private String sessionID;
     private String server;
 
     private int userId;

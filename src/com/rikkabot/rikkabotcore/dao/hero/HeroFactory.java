@@ -1,34 +1,82 @@
 package com.rikkabot.rikkabotcore.dao.hero;
 
+import com.rikkabot.rikkabotcore.Main;
 import com.rikkabot.rikkabotcore.dao.Factory;
 import com.rikkabot.rikkabotcore.net.HttpClient;
-import com.rikkabot.rikkabotcore.utils.Regex;
 
-import java.util.regex.Matcher;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import com.manulaiko.tabitha.Console;
 
 public class HeroFactory extends Factory<Hero> {
     /**
-     * Logins to the game and returns an instance of `Hero`
-     * @param username username of the account
-     * @param password password of the account
-     * @return an instance of hero
+     * Login to the game and returns an instance of `Hero`.
+     *
+     * @param username Username of the account.
+     * @param password Password of the account.
+     *
+     * @return An instance of hero.
      */
     public Hero login(String username, String password) {
-        HttpClient httpClient  = new HttpClient();
-        String loginPage   = httpClient.get("https://lp.darkorbit.com/frame"); //Turkish login fix
-        String loginAction = Regex.match("bgcdw_login_form\" action=\"(.*?)\"", loginPage)
-                               .group(1)
-                               .replace("amp;", "");
+        JSONObject response = Main.endpoint.find("httpLogin")
+                                    .execute(new JSONArray(new String[] {
+                                            username,
+                                            password
+                                        }
+                                    ));
 
-        httpClient.post(loginAction, "username=" + username + "&password=" + password);
+        return this.fromResponse(response);
+    }
 
-        String server = httpClient.locationUrl()
-                               .getHost()
-                               .replace(".darkorbit.com", ""); //can be done with Substring as well
-        String mapRev = httpClient.get("https://" + server + ".darkorbit.com/indexInternal.es?action=internalMapRevolution");
-        Matcher match  = Regex.match(".*\"userID\": \"([0-9]+)\",\"sessionID\": \"(.+?)\".*\"pid\": \"([0-9]+)\".*\"mapID\": \"([0-9]+)\"", mapRev);
+    /**
+     * Builds and returns a hero object from an endpoint response.
+     *
+     * @param response Endpoint response.
+     *
+     * @return Hero instance for response.
+     */
+    public Hero fromResponse(JSONObject response) {
+        if (response.getBoolean("isError")) {
+            return null;
+        }
 
-        Hero h = new Hero(username, password, server, Integer.parseInt(match.group(1)), Integer.parseInt(match.group(4)), httpClient, null);
+        JSONObject r = response.getJSONObject("result");
+
+        try {
+            return this._buildFromResult(r);
+        } catch (Exception e) {
+            Console.println("Couldn't build Hero!");
+            Console.print(e);
+        }
+
+        return null;
+    }
+
+    /**
+     * Builds and returns a Hero instance from a response result.
+     *
+     * @param result Response result.
+     *
+     * @return Hero for response result.
+     */
+    private Hero _buildFromResult(JSONObject result) {
+        int id = Integer.parseInt(result.getString("userID"));
+
+        if (super.byID(id) != null) {
+            return super.byID(id);
+        }
+
+        Hero h = new Hero(
+                result.getString("username"),
+                result.getString("password"),
+                result.getString("sessionID"),
+                result.getString("host"),
+                id,
+                Integer.parseInt(result.getString("mapID")),
+                new HttpClient(),
+                null
+        );
 
         super.add(h.userId(), h);
 
